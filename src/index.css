@@ -1,0 +1,319 @@
+@import "tailwindcss";
+
+:root {
+  /* Q版儿童卡通棋盘色板 */
+  --sky-blue: #BEEBFF;
+  --sea-blue: #7DD3FC;
+  --cream-white: #FFF7ED;
+  --peach-orange: #FDBA74;
+  --grape-purple: #A855F7;
+  --star-yellow: #FACC15;
+  --grass-green: #86EFAC;
+
+  font: 18px/145% system-ui, 'Segoe UI', Roboto, sans-serif;
+  color-scheme: light;
+  color: #6b5b7a;
+  background: var(--sky-blue);
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  touch-action: manipulation;
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(180deg, #BEEBFF 0%, #7DD3FC 60%, #E0F7FF 100%);
+}
+
+/* 游戏布局 - iPad 横屏优先 */
+.game-layout {
+  display: grid;
+  width: 100%;
+  height: 100dvh;
+  grid-template-rows: 72px 1fr 140px;
+  grid-template-columns: 260px 1fr 300px;
+  gap: 12px;
+  padding: 12px;
+  padding-top: max(12px, env(safe-area-inset-top));
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+}
+
+/* 顶部状态栏 */
+.top-bar {
+  grid-column: 1 / -1;
+}
+
+/* 面板通用样式 - 糖果风 */
+.side-panel--left,
+.side-panel--right {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+}
+
+.map-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.bottom-panel {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* 面板通用样式 */
+.panel-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 24px;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+  padding: 16px;
+}
+
+/* 资源胶囊 */
+.resource-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 16px;
+  min-width: 56px;
+  justify-content: center;
+}
+
+.resource-item__icon {
+  font-size: 20px;
+}
+
+.resource-item__value {
+  font-size: 18px;
+  font-weight: 700;
+  color: #7C3AED;
+}
+
+/* 操作按钮 - 大触控 */
+.action-btn {
+  min-height: 56px;
+  min-width: 90px;
+  padding: 14px 20px;
+  font-size: 16px;
+  font-weight: 700;
+  border: none;
+  border-radius: 18px;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.1s;
+  touch-action: manipulation;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.action-btn:active {
+  transform: scale(0.96);
+}
+
+.action-btn--primary {
+  background: linear-gradient(135deg, #A855F7, #C084FC);
+  color: white;
+}
+
+.action-btn--secondary {
+  background: linear-gradient(135deg, #86EFAC, #4ADE80);
+  color: #065F46;
+}
+
+.action-btn--danger {
+  background: linear-gradient(135deg, #FDBA74, #FB923C);
+  color: #7C2D12;
+}
+
+/* 建造面板 */
+.build-item {
+  background: white;
+  border: 3px solid #E9D5FF;
+  border-radius: 20px;
+  padding: 14px;
+  cursor: pointer;
+  transition: all 0.15s;
+  touch-action: manipulation;
+}
+
+.build-item:active {
+  transform: scale(0.97);
+}
+
+.build-item--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  border-color: #E5E7EB;
+}
+
+.build-item--affordable {
+  border-color: #A855F7;
+  background: #FAF5FF;
+}
+
+/* 规则面板 */
+.rules-panel {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(12px);
+  border-radius: 24px;
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+  padding: 20px;
+  overflow-y: auto;
+  max-height: 100%;
+}
+
+.rules-panel h3 {
+  font-size: 20px;
+  margin: 0 0 16px 0;
+  color: #A855F7;
+  font-weight: 800;
+}
+
+.rules-section {
+  margin-bottom: 16px;
+}
+
+.rules-section__title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #7C3AED;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.rules-item {
+  font-size: 13px;
+  color: #6B7280;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 0;
+}
+
+.rules-item span:first-child {
+  font-size: 18px;
+}
+
+/* 地图容器 - 海洋背景 */
+.map-container {
+  position: relative;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  border: 3px solid rgba(255, 255, 255, 0.5);
+}
+
+/* 触控禁用选中 */
+svg text,
+svg tspan {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* 响应式 - iPad 横屏 */
+@media (min-width: 1024px) and (orientation: landscape) {
+  .game-layout {
+    grid-template-columns: 260px 1fr 300px;
+    gap: 14px;
+    padding: 14px;
+  }
+}
+
+/* 响应式 - iPad 竖屏 */
+@media (max-width: 1023px) and (orientation: portrait) {
+  .game-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: 64px 1fr auto auto;
+    gap: 8px;
+    padding: 8px;
+  }
+
+  .side-panel--left {
+    display: none;
+  }
+}
+
+/* 响应式 - 手机 */
+@media (max-width: 767px) {
+  .game-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: 56px auto 1fr auto auto;
+    padding: 6px;
+    gap: 6px;
+  }
+
+  .action-btn {
+    min-height: 48px;
+    min-width: 70px;
+    padding: 10px 14px;
+    font-size: 14px;
+  }
+
+  .resource-item {
+    padding: 6px 10px;
+    min-width: 48px;
+  }
+
+  .resource-item__icon {
+    font-size: 16px;
+  }
+
+  .resource-item__value {
+    font-size: 16px;
+  }
+}
+
+/* 滚动条美化 */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(168, 85, 247, 0.4);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(168, 85, 247, 0.6);
+}
+
+/* 禁止文字选中 */
+.no-select {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* 触控优化 */
+@media (pointer: coarse) {
+  button, .action-btn, .build-item {
+    touch-action: manipulation;
+  }
+}

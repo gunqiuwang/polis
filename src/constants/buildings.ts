@@ -1,0 +1,205 @@
+import type { BuildingInfo, GodInfo, TerrainType, BuildingType } from '../types/game';
+
+export const BUILDINGS: Record<BuildingType, BuildingInfo> = {
+  town_hall: {
+    type: 'town_hall',
+    name: 'Town Hall',
+    emoji: '🏛️',
+    cost: {},
+    production: { food: 1, stone: 1 },
+    stars: 0,
+  },
+  farm: {
+    type: 'farm',
+    name: 'Farm',
+    emoji: '🌾',
+    cost: { stone: 1 },
+    production: { food: 1 },
+    stars: 1,
+    requires: ['field'],
+  },
+  quarry: {
+    type: 'quarry',
+    name: 'Quarry',
+    emoji: '⛏️',
+    cost: { food: 1 },
+    production: { stone: 1 },
+    stars: 1,
+    requires: ['mountain'],
+  },
+  gold_mine: {
+    type: 'gold_mine',
+    name: 'Gold Mine',
+    emoji: '💰',
+    cost: { stone: 1 },
+    production: { coin: 1 },
+    stars: 1,
+    requires: ['gold'],
+  },
+  metal_mine: {
+    type: 'metal_mine',
+    name: 'Metal Mine',
+    emoji: '🔩',
+    cost: { food: 1 },
+    production: { stone: 1 },
+    stars: 1,
+    requires: ['metal'],
+  },
+  forge: {
+    type: 'forge',
+    name: 'Forge',
+    emoji: '🔥',
+    cost: { stone: 1, coin: 1 },
+    production: { stone: 1, coin: 1 },
+    stars: 2,
+    requires: ['metal'],
+    requiresBuilding: ['metal_mine'],
+  },
+  fishing_ground: {
+    type: 'fishing_ground',
+    name: 'Fishing Ground',
+    emoji: '🎣',
+    cost: { coin: 1 },
+    production: { food: 1 },
+    stars: 1,
+    requires: ['lake', 'sea'],
+  },
+  beach_resort: {
+    type: 'beach_resort',
+    name: 'Beach Resort',
+    emoji: '🏖️',
+    cost: { stone: 1, coin: 1 },
+    production: { coin: 1 },
+    stars: 2,
+    requires: ['sea'],
+    requiresBuilding: ['fishing_ground'],
+  },
+  merchant_guard: {
+    type: 'merchant_guard',
+    name: 'Merchant Guard',
+    emoji: '🛡️',
+    cost: { coin: 1 },
+    production: { coin: 1 },
+    stars: 1,
+    requires: ['wasteland'],
+  },
+  temple: {
+    type: 'temple',
+    name: 'Temple',
+    emoji: '🏛️',
+    cost: { stone: 2, coin: 1 },
+    production: { faith: 1 },
+    stars: 3,
+  },
+  road: {
+    type: 'road',
+    name: 'Road',
+    emoji: '🛤️',
+    cost: { stone: 1 },
+    production: {},
+    stars: 0,
+  },
+  boat: {
+    type: 'boat',
+    name: 'Boat',
+    emoji: '⛵',
+    cost: { coin: 1 },
+    production: {},
+    stars: 0,
+    requires: ['lake', 'sea'],
+  },
+  sea_road: {
+    type: 'sea_road',
+    name: 'Sea Road',
+    emoji: '🚤',
+    cost: { coin: 1 },
+    production: {},
+    stars: 0,
+    requires: ['lake', 'sea'],
+  },
+};
+
+export const GODS: Record<string, GodInfo> = {
+  zeus: {
+    type: 'zeus',
+    name: 'Zeus',
+    emoji: '⚡',
+    description: '立即获得 1 星',
+  },
+  hera: {
+    type: 'hera',
+    name: 'Hera',
+    emoji: '👑',
+    description: '免费保护 1 个建筑',
+  },
+  poseidon: {
+    type: 'poseidon',
+    name: 'Poseidon',
+    emoji: '🌊',
+    description: '免费建造 1 艘船',
+  },
+  hades: {
+    type: 'hades',
+    name: 'Hades',
+    emoji: '💀',
+    description: '荒地建筑额外 +1 星',
+  },
+  dionysus: {
+    type: 'dionysus',
+    name: 'Dionysus',
+    emoji: '🍇',
+    description: '农场额外产 1 金币',
+  },
+  demeter: {
+    type: 'demeter',
+    name: 'Demeter',
+    emoji: '🌻',
+    description: '立即获得 2 食物',
+  },
+  apollo: {
+    type: 'apollo',
+    name: 'Apollo',
+    emoji: '🎵',
+    description: '查看 1 个隐藏地块',
+  },
+  artemis: {
+    type: 'artemis',
+    name: 'Artemis',
+    emoji: '🏹',
+    description: '免费建造 1 个渔场或采石场',
+  },
+};
+
+export const TERRAIN_EMOJI: Record<TerrainType, string> = {
+  field: '🌾',
+  mountain: '⛰️',
+  gold: '🪙',
+  metal: '⚙️',
+  lake: '🐟',
+  sea: '🌊',
+  wasteland: '🏜️',
+  town_hall: '🏛️',
+  cloud: '☁️',
+};
+
+export const TERRAIN_NAME: Record<TerrainType, string> = {
+  field: '农田',
+  mountain: '山脉',
+  gold: '金矿',
+  metal: '矿脉',
+  lake: '湖泊',
+  sea: '海洋',
+  wasteland: '荒地',
+  town_hall: '城邦中心',
+  cloud: '云朵',
+};
+
+export const INITIAL_RESOURCES = {
+  food: 2,
+  stone: 2,
+  coin: 0,
+  faith: 0,
+};
+
+export const WINNING_STARS = 10;
+export const ACTIONS_PER_TURN = 2;
